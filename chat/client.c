@@ -1,3 +1,4 @@
+#include <arpa/inet.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <stdio.h>
@@ -18,6 +19,15 @@ int main() {
   if ((server_ent = gethostbyname(hostname)) == NULL) {
     perror("gethostbyname");
     return 1;
+  }
+
+  printf("\tserver name: %s\n", server_ent->h_name);
+  for (int i = 0; server_ent->h_aliases[i] != NULL; i++) {
+    printf("alias[%d]: %s\n", i, server_ent->h_aliases[i]);
+  }
+  for (int i = 0; server_ent->h_addr_list[i] != NULL; i++) {
+    printf("\taddress[%d]: %s\n", i,
+           inet_ntoa(*(struct in_addr *)server_ent->h_addr_list[i]));
   }
 
   memset((char *)&server, 0, sizeof(server));
