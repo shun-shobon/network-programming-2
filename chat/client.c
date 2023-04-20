@@ -21,9 +21,9 @@ int main() {
     return 1;
   }
 
-  printf("\tserver name: %s\n", server_ent->h_name);
+  printf("server name: %s\n", server_ent->h_name);
   for (int i = 0; server_ent->h_aliases[i] != NULL; i++) {
-    printf("alias[%d]: %s\n", i, server_ent->h_aliases[i]);
+    printf("\talias[%d]: %s\n", i, server_ent->h_aliases[i]);
   }
   for (int i = 0; server_ent->h_addr_list[i] != NULL; i++) {
     printf("\taddress[%d]: %s\n", i,
@@ -45,14 +45,17 @@ int main() {
     return 1;
   }
 
-  write(1, "Wait\n", 5);
+  write(1, "connected!\n", 12);
 
   do {
     int n;
 
     n = read(soc, buf, BUF_LEN);
+    write(1, "server: ", 9);
     write(1, buf, n);
-    n = read(0, buf, BUF_LEN);
+
+    write(1, "client: ", 9);
+    n = read(1, buf, BUF_LEN);
     write(soc, buf, n);
   } while (strncmp(buf, "quit", 4) != 0);
 

@@ -42,14 +42,18 @@ int main() {
   close(soc_waiting);
 
   // ここから先
-  write(1, "Go ahead!\n", 10);
+  write(1, "connected!\n", 12);
 
   // 通信のループ
   do {
     int n;
+
+    write(1, "server: ", 9);
     n = read(0, buf, BUF_LEN);
     write(soc, buf, n);
+
     n = read(soc, buf, BUF_LEN);
+    write(1, "client: ", 9);
     write(1, buf, n);
   } while (strncmp(buf, "quit", 4) != 0);
 
