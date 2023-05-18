@@ -1,5 +1,6 @@
+#include "mylib.h"
 #include "session.h"
-#include "tag.h"
+#include <stdlib.h>
 
 int main() {
   int soc;
@@ -13,8 +14,7 @@ int main() {
     exit(1);
   }
 
-  session_init(soc, 'x', 10, 10, 'o', 1, 1);
-
+  session_init(soc);
   session_loop();
 
   return 0;
